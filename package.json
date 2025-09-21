@@ -1,0 +1,22 @@
+{
+  "name": "mipmap",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "check": "biome check --write",
+    "dev": "rsbuild dev --open",
+    "format": "biome format --write",
+    "preview": "rsbuild preview"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.3",
+    "@rsbuild/core": "^1.5.6",
+    "@webgpu/types": "^0.1.65",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "wgpu-matrix": "^3.4.0"
+  }
+}
