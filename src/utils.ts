@@ -30,7 +30,7 @@ export const makeMip = (tex: Tex): Tex => {
         return src.subarray(srcOffset, srcOffset + 4);
     }
 
-    // for each dstPixel, blend colors of its 4 surrounding pixels
+    // for each pixel in dst, mix its 4 corresonding pixels in src
     for (let p = 0; p < length; p++) {
         // get texel coord of dstPixel
         const dstRow = p / length;
