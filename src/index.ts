@@ -1,7 +1,7 @@
 import { mat4 } from 'wgpu-matrix';
 import './index.css';
 import mainShader from './shaders/main.wgsl?raw';
-import { loadBitmap } from './utils';
+import { loadImage } from './utils';
 
 const root = document.querySelector('#root') as HTMLDivElement;
 
@@ -34,14 +34,13 @@ async function main() {
     },
   })
 
-  const bitmap: ImageBitmap = await loadBitmap("/rectmill.png");
-  const { width, height } = bitmap;
+  const { data, width, height } = await loadImage("/rectmill.png");
   const texture = device.createTexture({
     size: [width, height],
     format: 'rgba8unorm',
-    usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
+    usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST,
   });
-  device.queue.copyExternalImageToTexture({ source: bitmap }, { texture }, { width, height });
+  device.queue.writeTexture({ texture }, data, { bytesPerRow: width * 4 }, { width, height });
 
   const sampler = device.createSampler();
 
