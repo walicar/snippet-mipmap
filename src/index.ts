@@ -3,6 +3,7 @@ import './index.css';
 import mainShader from './shaders/main.wgsl?raw';
 import { loadImage, makeMips } from './utils';
 
+const ENABLE_MIP = 1;
 const root = document.querySelector('#root') as HTMLDivElement;
 
 async function main() {
@@ -35,20 +36,35 @@ async function main() {
   });
 
   const image = await loadImage('/rectmill.png');
-  const mips = makeMips(image);
-
-  const { width, height } = image;
-  const texture = device.createTexture({
+  const { data, width, height } = image;
+  let texture = device.createTexture({
     size: [width, height],
-    mipLevelCount: mips.length,
     format: 'rgba8unorm',
     usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST,
   });
 
-  for (let level = 0; level < mips.length; level++) {
-    const { data, width, height } = mips[level];
+  if (ENABLE_MIP) {
+    const mips = makeMips(image);
+    texture.destroy();
+    texture = device.createTexture({
+      size: [width, height],
+      mipLevelCount: mips.length,
+      format: 'rgba8unorm',
+      usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST,
+    });
+
+    for (let level = 0; level < mips.length; level++) {
+      const { data, width, height } = mips[level];
+      device.queue.writeTexture(
+        { texture, mipLevel: level },
+        data,
+        { bytesPerRow: width * 4 },
+        { width, height },
+      );
+    }
+  } else {
     device.queue.writeTexture(
-      { texture, mipLevel: level },
+      { texture },
       data,
       { bytesPerRow: width * 4 },
       { width, height },
