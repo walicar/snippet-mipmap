@@ -46,20 +46,20 @@ export const makeMip = (tex: Tex): Tex => {
     const dstCol = p % dstWidth;
 
     // get center texcoord in dst
-    const dstU = (dstRow + 0.5) / dstWidth;
-    const dstV = (dstCol + 0.5) / dstHeight;
+    const dstU = (dstCol + 0.5) / dstWidth;
+    const dstV = (dstRow + 0.5) / dstHeight;
 
     // get corresponding center texcoord in src
     const srcU = dstU * srcWidth - 0.5;
     const srcV = dstV * srcHeight - 0.5;
 
     // get topleft texel coord
-    const srcRow = Math.floor(srcU);
-    const srcCol = Math.floor(srcV);
+    const srcRow = Math.floor(srcV);
+    const srcCol = Math.floor(srcU);
 
     // calculate how much to mix our colors
-    const t1 = srcU - srcRow;
-    const t2 = srcV - srcCol;
+    const t1 = srcU - srcCol;
+    const t2 = srcV - srcRow;
 
     // get colors for each square
     const tl = getColor(srcRow, srcCol);
