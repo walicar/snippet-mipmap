@@ -15,8 +15,8 @@ async function main() {
   const format = navigator.gpu.getPreferredCanvasFormat();
 
   const canvas = document.createElement('canvas');
-  canvas.width = 480;
-  canvas.height = 240;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
   const context = canvas.getContext('webgpu');
   if (!context) return;
   context.configure({ device, format });
@@ -46,12 +46,14 @@ async function main() {
   const far = 2000;
   const proj = mat4.perspective(fovy, aspect, near, far);
 
-  const eye = [0, 0.5, -5];
+  const eye = [0, 1.5, -5];
   const target = [0, 0, 0];
   const up = [0, 1, 0];
   const view = mat4.lookAt(eye, target, up);
 
-  const model = mat4.identity();
+  let model = mat4.identity();
+  model = mat4.rotateX(model, 90 * Math.PI / 180);
+  model = mat4.scale(model, [50,50,1]);
 
   const mvp = mat4.mul(proj, view);
   mat4.mul(mvp, model, mvp);
@@ -93,7 +95,10 @@ async function main() {
     );
   }
 
-  const sampler = device.createSampler();
+  const sampler = device.createSampler({
+    addressModeU: "repeat",
+    addressModeV: "repeat"
+  });
 
   const bindgroup = device.createBindGroup({
     layout: pipeline.getBindGroupLayout(0),

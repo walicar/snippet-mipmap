@@ -28,7 +28,7 @@ struct VsOut {
 
     var vsOut: VsOut;
     vsOut.pos = mvp * vec4f(pos[idx], 0.0, 1.0);
-    vsOut.texcoord = tex[idx];
+    vsOut.texcoord = tex[idx] * vec2f(75,75);
     return vsOut;
 }
 
