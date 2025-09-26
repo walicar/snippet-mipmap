@@ -52,8 +52,8 @@ async function main() {
   const view = mat4.lookAt(eye, target, up);
 
   let model = mat4.identity();
-  model = mat4.rotateX(model, 90 * Math.PI / 180);
-  model = mat4.scale(model, [50,50,1]);
+  model = mat4.rotateX(model, (90 * Math.PI) / 180);
+  model = mat4.scale(model, [50, 50, 1]);
 
   const mvp = mat4.mul(proj, view);
   mat4.mul(mvp, model, mvp);
@@ -96,8 +96,8 @@ async function main() {
   }
 
   const sampler = device.createSampler({
-    addressModeU: "repeat",
-    addressModeV: "repeat"
+    addressModeU: 'repeat',
+    addressModeV: 'repeat',
   });
 
   const bindgroup = device.createBindGroup({
