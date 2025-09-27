@@ -96,9 +96,7 @@ export const makeMips = (tex: Tex): Tex[] => {
 export const loadTex = async (url: string): Promise<Tex> => {
   const res = await fetch(url);
   const blob = await res.blob();
-  const bitmap = await createImageBitmap(blob, {
-    colorSpaceConversion: 'none',
-  });
+  const bitmap = await createImageBitmap(blob);
   const { width, height } = bitmap;
 
   const canvas = new OffscreenCanvas(width, height);
