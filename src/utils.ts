@@ -93,7 +93,7 @@ export const makeMips = (tex: Tex): Tex[] => {
   return mips;
 };
 
-export const loadImage = async (url: string): Promise<Tex> => {
+export const loadTex = async (url: string): Promise<Tex> => {
   const res = await fetch(url);
   const blob = await res.blob();
   const bitmap = await createImageBitmap(blob, {

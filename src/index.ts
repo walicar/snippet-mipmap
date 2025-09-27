@@ -1,7 +1,7 @@
 import { mat4 } from 'wgpu-matrix';
 import './index.css';
 import mainShader from './shaders/main.wgsl?raw';
-import { loadImage, makeMips } from './utils';
+import { loadTex, makeMips } from './utils';
 
 const ENABLE_MIP = 1;
 const root = document.querySelector('#root') as HTMLDivElement;
@@ -59,7 +59,7 @@ async function main() {
   mat4.mul(mvp, model, mvp);
   device.queue.writeBuffer(uniformBuffer, 0, mvp.buffer);
 
-  const image = await loadImage('/rectmill.png');
+  const image = await loadTex('/rectmill.png');
   const { data, width, height } = image;
   let texture = device.createTexture({
     size: [width, height],
