@@ -9,12 +9,12 @@ struct VsOut {
     @builtin(vertex_index) idx: u32
 ) -> VsOut {
     let pos = array(
-        vec2f(-1.0,-1.0),
-        vec2f(-1.0,1.0),
-        vec2f(1.0,-1.0),
-        vec2f(-1.0,1.0),
-        vec2f(1.0,1.0),
-        vec2f(1.0,-1.0)
+        vec2f(-1,-1),
+        vec2f(-1,1),
+        vec2f(1,-1),
+        vec2f(-1,1),
+        vec2f(1,1),
+        vec2f(1,-1)
     );
 
     let tex = array(
